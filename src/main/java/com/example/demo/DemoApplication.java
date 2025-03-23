@@ -18,8 +18,6 @@ public class DemoApplication {
 
   @Autowired
   private ProductService productService;
-  @Autowired
-  private TenantIdentifierResolver tenantIdentifierResolver;
 
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
@@ -36,7 +34,7 @@ public class DemoApplication {
   public List<Product> productsTransactional(@RequestParam("tenantId") String tenantId) {
     log.info("/products_transactional: tenantId={}", tenantId);
     var schemaName = productService.loadSchemaName(tenantId);
-    tenantIdentifierResolver.setCurrentTenant(schemaName);
+    TenantContext.setCurrentTenant(schemaName);
     var products = productService.loadTenantProducts();
     return products;
   }

@@ -18,21 +18,19 @@ class ProductService {
   private TenantRepository tenantRepository;
   @Autowired
   private ProductRepository productRepository;
-  @Autowired
-  private TenantIdentifierResolver tenantIdentifierResolver;
 
   public List<Product> loadProducts(String tenantId) {
     log.info("loadProducts: tenantId={}", tenantId);
 
     // get tenant information
     log.info("start to get tenant information");
-    tenantIdentifierResolver.setCurrentTenant("management");
+    TenantContext.setCurrentTenant("management");
     var tenants = tenantRepository.findById(tenantId);
     log.info("tenants: {}", tenants);
 
     // get product from tenant schema
     log.info("start to get product from tenant schema");
-    tenantIdentifierResolver.setCurrentTenant(tenants.get().getSchemaName());
+    TenantContext.setCurrentTenant(tenants.get().getSchemaName());
     var products = productRepository.findAll();
     log.info("products: {}", products);
 
@@ -44,7 +42,7 @@ class ProductService {
 
     // get tenant information
     log.info("start to get tenant information");
-    tenantIdentifierResolver.setCurrentTenant("management");
+    TenantContext.setCurrentTenant("management");
     var tenants = tenantRepository.findById(tenantId);
     log.info("tenants: {}", tenants);
 

@@ -11,16 +11,17 @@ import org.springframework.stereotype.Component;
 @Slf4j
 class TenantIdentifierResolver implements CurrentTenantIdentifierResolver<String>, HibernatePropertiesCustomizer {
 
-  private String currentTenant = "unknown";
-
-  public void setCurrentTenant(String tenant) {
-    currentTenant = tenant;
-  }
+  private String defaultTenant = "PUBLIC";
 
   @Override
   public String resolveCurrentTenantIdentifier() {
-    log.info("resolveCurrentTenantIdentifier: currentTenantId={}", currentTenant);
-    return currentTenant;
+    String t =  TenantContext.getCurrentTenant();
+    log.info("resolveCurrentTenantIdentifier: current={}", t);
+    if(t != null){
+      return t;
+    } else {
+      return defaultTenant;
+    }
   }
 
   @Override
