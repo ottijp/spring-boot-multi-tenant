@@ -1,6 +1,6 @@
 # spring-boot-multi-tenant
 
-This is the example of Spring Boot appliation that use the multi tenant DB (schema base).
+This is the example of Spring Boot application that use the multi tenant DB (schema base).
 
 ![](database-structure.png)
 
